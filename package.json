@@ -1,0 +1,34 @@
+{
+  "name": "racer-schema",
+  "version": "0.1.0",
+  "description": "Schema plugin for Racer",
+  "main": "lib",
+  "scripts": {
+    "test": "mocha \"test/**/*.mocha.js\""
+  },
+  "dependencies": {
+    "z-schema": "~2.4.7",
+    "dotty": "0.0.2"
+  },
+  "devDependencies": {
+    "mocha": "~1.20.0",
+    "racer": "~0.6.0-alpha12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/derbyparty/racer-schema.git"
+  },
+  "keywords": [
+    "racer",
+    "derby",
+    "derbyjs",
+    "validation",
+    "schema"
+  ],
+  "author": "Vladimir Makhaev",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/derbyparty/racer-schema/issues"
+  }
+}

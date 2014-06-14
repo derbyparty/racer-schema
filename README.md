@@ -144,8 +144,7 @@ model.add('collection', doc, function(err) {
 ```
 
 ### Example
-- [derby-starter](https://github.com/vmakhaev/derby-starter/tree/auth) with auth
-- [auth-example](https://github.com/vmakhaev/auth-example) simple app with auth
+- [racer-schema-example](https://github.com/derbyparty/racer-schema-example) simple app with validation
 
 ## The MIT License
 

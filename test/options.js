@@ -49,7 +49,8 @@ module.exports = {
             }
           }
         }
-      }
+      },
+      additionalProperties: false
     },
     users: {
       title: 'Example Schema',
@@ -73,7 +74,7 @@ module.exports = {
         hobbies: {
           type: 'array',
           maxItems: 3,
-          items: { 
+          items: {
             type: 'string',
             validators: ['notVasya']
           },

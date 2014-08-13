@@ -8,8 +8,10 @@ describe('errors', function(){
       lastName: 'Ivanov',
       age: 18
     }
-    model.add('users', user, function(err) {
+    var userId = model.add('users', user, function(err) {
       assert(err);
+      assert.equal(err.collection, 'users');
+      assert.equal(err.docId, userId);
       assert.equal(err.errors.length, 1);
       assert.equal(err.errors[0].paths.length, 1);
       assert.equal(err.errors[0].paths[0], 'firstName');

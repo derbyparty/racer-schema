@@ -9,19 +9,21 @@ describe("errors", function () {
       age: 18,
     };
     var userId = model.add("users", user, function (err) {
-      console.log(err);
-      console.log(arguments);
-
       assert(err);
-      assert.equal(err.collection, "users");
-      assert.equal(err.docId, userId);
-      assert.equal(err.errors.length, 1);
-      assert.equal(err.errors[0].paths.length, 1);
-      assert.equal(err.errors[0].paths[0], "firstName");
+      assert(err.code === "ERR_VALIDATION_FAILED");
+
+      const errorData = JSON.parse(err.message, null, 2);
+
+      assert.equal(errorData.collection, "users");
+      assert.equal(errorData.docId, userId);
+      assert.equal(errorData.errors.length, 1);
+      assert.equal(errorData.errors[0].paths.length, 1);
+      assert.equal(errorData.errors[0].paths[0], "firstName");
+
       done();
     });
   });
-  /* 
+
   it("should return hobbies.1 error", function (done) {
     var user = {
       firstName: "Ivan",
@@ -31,10 +33,15 @@ describe("errors", function () {
     };
     model.add("users", user, function (err) {
       assert(err);
-      assert.equal(err.errors.length, 1);
-      assert.equal(err.errors[0].paths.length, 2);
-      assert.equal(err.errors[0].paths[0], "hobbies");
-      assert.strictEqual(err.errors[0].paths[1], 1);
+      assert(err.code === "ERR_VALIDATION_FAILED");
+
+      const errorData = JSON.parse(err.message, null, 2);
+
+      assert.equal(errorData.errors.length, 1);
+      assert.equal(errorData.errors[0].paths.length, 2);
+      assert.equal(errorData.errors[0].paths[0], "hobbies");
+      assert.strictEqual(errorData.errors[0].paths[1], "1");
+
       done();
     });
   });
@@ -48,10 +55,14 @@ describe("errors", function () {
     };
     model.add("users", user, function (err) {
       assert(err);
-      assert.equal(err.errors.length, 1);
-      assert.equal(err.errors[0].paths.length, 2);
-      assert.equal(err.errors[0].paths[0], "hobbies");
-      assert.strictEqual(err.errors[0].paths[1], 2);
+      assert(err.code === "ERR_VALIDATION_FAILED");
+
+      const errorData = JSON.parse(err.message, null, 2);
+
+      assert.equal(errorData.errors.length, 1);
+      assert.equal(errorData.errors[0].paths.length, 2);
+      assert.equal(errorData.errors[0].paths[0], "hobbies");
+      assert.strictEqual(errorData.errors[0].paths[1], 2);
       done();
     });
   });
@@ -64,9 +75,13 @@ describe("errors", function () {
     };
     model.add("products", product, function (err) {
       assert(err);
-      assert.equal(err.errors.length, 1);
-      assert.equal(err.errors[0].paths.length, 1);
-      assert.equal(err.errors[0].paths[0], "categoryHash");
+      assert(err.code === "ERR_VALIDATION_FAILED");
+
+      const errorData = JSON.parse(err.message, null, 2);
+
+      assert.equal(errorData.errors.length, 1);
+      assert.equal(errorData.errors[0].paths.length, 2);
+      assert.equal(errorData.errors[0].paths[0], "categoryHash");
       done();
     });
   });
@@ -77,14 +92,21 @@ describe("errors", function () {
     };
     var productId = model.add("products", product, function (err) {
       assert(!err);
+
       var $product = model.at("products." + productId);
+
       model.fetch($product, function (err) {
         assert(!err);
+
         $product.set("wrong", "value", function (err) {
           assert(err);
-          assert.equal(err.errors.length, 1);
-          assert.equal(err.errors[0].paths.length, 1);
-          assert.equal(err.errors[0].paths[0], "wrong");
+          assert(err.code === "ERR_VALIDATION_FAILED");
+
+          const errorData = JSON.parse(err.message, null, 2);
+
+          assert.equal(errorData.errors.length, 1);
+          assert.equal(errorData.errors[0].paths.length, 1);
+          assert.equal(errorData.errors[0].paths[0], "wrong");
           done();
         });
       });
@@ -97,15 +119,22 @@ describe("errors", function () {
     };
     var productId = model.add("products", product, function (err) {
       assert(!err);
+
       var $product = model.at("products." + productId);
+
       model.fetch($product, function (err) {
         assert(!err);
+
         $product.push("categories", model.id(), function (err) {
           assert(err);
-          assert.equal(err.errors.length, 1);
-          assert.equal(err.errors[0].paths.length, 2);
-          assert.equal(err.errors[0].paths[0], "categories");
-          assert.equal(err.errors[0].paths[1], 0);
+          assert(err.code === "ERR_VALIDATION_FAILED");
+
+          const errorData = JSON.parse(err.message, null, 2);
+
+          assert.equal(errorData.errors.length, 1);
+          assert.equal(errorData.errors[0].paths.length, 2);
+          assert.equal(errorData.errors[0].paths[0], "categories");
+          assert.equal(errorData.errors[0].paths[1], 0);
           done();
         });
       });
@@ -118,19 +147,26 @@ describe("errors", function () {
     };
     var productId = model.add("products", product, function (err) {
       assert(!err);
+
       var $product = model.at("products." + productId);
+
       model.fetch($product, function (err) {
         assert(!err);
+
         $product.push("values.value", "wrong", function (err) {
           assert(err);
-          assert.equal(err.errors.length, 1);
-          assert.equal(err.errors[0].paths.length, 3);
-          assert.equal(err.errors[0].paths[0], "values");
-          assert.equal(err.errors[0].paths[1], "value");
-          assert.equal(err.errors[0].paths[2], 0);
+          assert(err.code === "ERR_VALIDATION_FAILED");
+
+          const errorData = JSON.parse(err.message, null, 2);
+
+          assert.equal(errorData.errors.length, 1);
+          assert.equal(errorData.errors[0].paths.length, 3);
+          assert.equal(errorData.errors[0].paths[0], "values");
+          assert.equal(errorData.errors[0].paths[1], "value");
+          assert.equal(errorData.errors[0].paths[2], 0);
           done();
         });
       });
     });
-  }); */
+  });
 });

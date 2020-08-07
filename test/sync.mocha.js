@@ -1,4 +1,4 @@
-/* var assert = require("assert");
+var assert = require("assert");
 var model = require("./model");
 
 describe("sync creation", function () {
@@ -91,10 +91,9 @@ describe("sync editing", function () {
   it("should not push not unique item", function (done) {
     $user.push("hobbies", "jazz", function (err) {
       assert(!err);
+
       $user.push("hobbies", "jazz", function (err) {
-        if (err) {
-          throw new Error(err);
-        }
+        assert(err);
 
         done();
       });
@@ -149,4 +148,3 @@ describe("sync editing", function () {
     $user.del(done);
   });
 });
- */

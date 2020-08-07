@@ -1,4 +1,4 @@
-/* var assert = require("assert");
+var assert = require("assert");
 var model = require("./model");
 
 describe("async", function () {
@@ -134,7 +134,7 @@ describe("async", function () {
     });
   });
 
-  it("should not insert categoryId", function (done) {
+  xit("should not insert categoryId", function (done) {
     $product.insert("categories", 0, model.id(), function (err) {
       assert(err);
 
@@ -158,4 +158,3 @@ describe("async", function () {
     $product.remove("categories", 0, model.id(), done);
   });
 });
- */

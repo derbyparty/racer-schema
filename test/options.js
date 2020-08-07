@@ -109,7 +109,9 @@ module.exports = {
     join: {
       async: function (context, done) {
         var id = context.value;
+
         if (!id) return done();
+
         var collection = context.schema.collection;
 
         var model = this.backend.createModel();
@@ -118,6 +120,7 @@ module.exports = {
 
         model.fetch($entity, function (err) {
           if (err) return done(err);
+
           if (!$entity.get()) {
             return done(Error("No " + collection + " with id " + id));
           }

@@ -115,7 +115,7 @@ var options = {
       sync: function(value, context) {
         var data = context.data; // preloaded data is here
 
-        retturn true || false;
+        return true || false;
       }
     }
   }
